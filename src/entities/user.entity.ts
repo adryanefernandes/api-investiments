@@ -1,15 +1,14 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { UserStatus } from "../utils/enums";
-import { Address } from "./address";
-import { BankAccount } from "./bankAccount.entity";
+import { Address, BankAccount } from ".";
 import { Timestamp } from "./extendigs/timestamp";
 
-@Entity("Accounts")
-export class Account {
-  @PrimaryGeneratedColumn({ name: "id_account" })
+@Entity("Users")
+export class User {
+  @PrimaryGeneratedColumn({ name: "id_user" })
   id: number;
 
-  @PrimaryGeneratedColumn("uuid", { name: "uuid_account" })
+  @PrimaryGeneratedColumn("uuid", { name: "uuid_user" })
   uuid: string;
 
   @Column()
@@ -40,10 +39,10 @@ export class Account {
   @Column({ default: true })
   active: boolean;
 
-  @OneToMany(() => Address, (address) => address.account, { nullable: true })
+  @OneToMany(() => Address, (address) => address.user, { nullable: true })
   addresses: Address[];
 
-  @OneToMany(() => BankAccount, (bankAccount) => bankAccount.account, {
+  @OneToMany(() => BankAccount, (bankAccount) => bankAccount.user, {
     nullable: true,
   })
   bankAccounts: BankAccount[];
