@@ -3,7 +3,7 @@ import { AppDataSource } from "./dataSource";
 import express, { Express } from "express";
 import router from "./routes";
 
-const port = process.env.SERVER_PORT || 3000;
+const SERVER_PORT = process.env.SERVER_PORT || 3000;
 
 // Inicia o back-end
 const main = async () => {
@@ -16,7 +16,7 @@ const main = async () => {
 
     app.use("/api", router);
 
-    app.listen(port, () => console.log("Servidor de pé"));
+    app.listen(SERVER_PORT, () => console.log("Servidor de pé"));
   } catch (error) {
     console.log(error);
   }
