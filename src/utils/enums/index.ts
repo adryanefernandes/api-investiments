@@ -13,3 +13,16 @@ export enum FrequencyProceeds {
   SEMESTERLY = "semesterly",
   YEARLY = "yearly",
 }
+
+// Categória de ativo
+export enum AssetCategory {
+  VARIABLE = "variable",
+  FIXED = "fixes",
+}
+
+// Medida de risco de um ativo
+export enum AssetRisc {
+  LOW = "low",
+  MODERATE = "moderate",
+  HIGH = "high",
+}

@@ -47,7 +47,7 @@ export class User {
   bankAccounts: BankAccount[];
 
   @OneToMany(() => Wallet, (wallet) => wallet.user)
-  wallet: Wallet[];
+  wallets: Wallet[];
 
   @Column(() => Timestamp, { prefix: false })
   times: Timestamp;
