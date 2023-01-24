@@ -16,9 +16,7 @@ export class Bank {
   @Column({ length: 10 })
   ispb: string;
 
-  @OneToMany(() => BankAccount, (bankAccount) => bankAccount.bank, {
-    nullable: true,
-  })
+  @OneToMany(() => BankAccount, (bankAccount) => bankAccount.bank)
   bankAccounts: BankAccount[];
 
   @Column(() => Timestamp, { prefix: false })

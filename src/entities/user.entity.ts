@@ -39,12 +39,10 @@ export class User {
   @Column({ default: true })
   active: boolean;
 
-  @OneToMany(() => Address, (address) => address.user, { nullable: true })
+  @OneToMany(() => Address, (address) => address.user)
   addresses: Address[];
 
-  @OneToMany(() => BankAccount, (bankAccount) => bankAccount.user, {
-    nullable: true,
-  })
+  @OneToMany(() => BankAccount, (bankAccount) => bankAccount.user)
   bankAccounts: BankAccount[];
 
   @Column(() => Timestamp, { prefix: false })

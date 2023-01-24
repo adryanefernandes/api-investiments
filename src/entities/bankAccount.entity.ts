@@ -5,7 +5,7 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { User } from ".";
+import { TypeBankAccount, User } from ".";
 import { Bank } from "./bank.entity";
 import { Timestamp } from "./extendigs/timestamp";
 
@@ -30,6 +30,13 @@ export class BankAccount {
   @ManyToOne(() => Bank, (bank) => bank.bankAccounts)
   @JoinColumn({ name: "id_bank" })
   bank: Bank;
+
+  @ManyToOne(
+    () => TypeBankAccount,
+    (typeBankAccount) => typeBankAccount.bankAccounts
+  )
+  @JoinColumn({ name: "id_type_bank_account" })
+  typeBankAccount: TypeBankAccount;
 
   @Column(() => Timestamp, { prefix: false })
   times: Timestamp;
