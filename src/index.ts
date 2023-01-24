@@ -2,6 +2,8 @@ import "reflect-metadata";
 import { AppDataSource } from "./config/dataSource";
 import express, { Express } from "express";
 
+const port = process.env.SERVER_PORT || 3000;
+
 // Inicia o back-end
 const main = async () => {
   try {
@@ -13,7 +15,7 @@ const main = async () => {
 
     app.get("/", (req, res) => res.send({ message: "Tamo funcionando" }));
 
-    app.listen(3000, () => console.log("Servidor de pé"));
+    app.listen(port, () => console.log("Servidor de pé"));
   } catch (error) {
     console.log(error);
   }
