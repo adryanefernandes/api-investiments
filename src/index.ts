@@ -1,6 +1,7 @@
 import "reflect-metadata";
-import { AppDataSource } from "./config/dataSource";
+import { AppDataSource } from "./dataSource";
 import express, { Express } from "express";
+import router from "./routes";
 
 // Inicia o back-end
 const main = async () => {
@@ -11,7 +12,7 @@ const main = async () => {
     const app: Express = express();
     app.use(express.json());
 
-    app.get("/", (req, res) => res.send({ message: "Tamo funcionando" }));
+    app.use("/api", router);
 
     app.listen(3000, () => console.log("Servidor de pé"));
   } catch (error) {

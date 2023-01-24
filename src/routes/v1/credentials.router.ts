@@ -1,8 +1,7 @@
 import { Router } from "express";
-import routerV1 from "./v1";
 
 const router = Router();
 
-router.use("/v1", routerV1);
+router.post("/signup", (req, res) => res.send({ message: "tudo certo" }));
 
 export default router;
