@@ -5,7 +5,8 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { User } from "./user.entity";
+import { Account } from "./account.entity";
+import { Timestamp } from "./extendigs/timestamp";
 
 @Entity("Addresses")
 export class Address {
@@ -36,10 +37,13 @@ export class Address {
   @Column({ default: true })
   isCurrent: boolean;
 
-  @ManyToOne(() => User, (user) => user.addresses)
+  @ManyToOne(() => Account, (account) => account.addresses)
   @JoinColumn([
-    { name: "id_user", referencedColumnName: "id" },
-    { name: "uuid_user", referencedColumnName: "uuid" },
+    { name: "id_account", referencedColumnName: "id" },
+    { name: "uuid_account", referencedColumnName: "uuid" },
   ])
-  user: User;
+  account: Account;
+
+  @Column(() => Timestamp, { prefix: false })
+  times: Timestamp;
 }
