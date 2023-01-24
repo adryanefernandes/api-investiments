@@ -1,6 +1,7 @@
 import "reflect-metadata";
-import { AppDataSource } from "./config/dataSource";
+import { AppDataSource } from "./dataSource";
 import express, { Express } from "express";
+import router from "./routes";
 
 const port = process.env.SERVER_PORT || 3000;
 
@@ -13,7 +14,7 @@ const main = async () => {
     const app: Express = express();
     app.use(express.json());
 
-    app.get("/", (req, res) => res.send({ message: "Tamo funcionando" }));
+    app.use("/api", router);
 
     app.listen(port, () => console.log("Servidor de pé"));
   } catch (error) {
