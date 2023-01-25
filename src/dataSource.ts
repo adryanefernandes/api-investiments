@@ -1,7 +1,12 @@
 import { DataSource } from "typeorm";
 import dotenv from "dotenv";
+import { isEnvConfigure } from "./utils";
+import { ExceptionError } from "./errors";
 
 const { parsed } = dotenv.config();
+if (!isEnvConfigure(parsed)) {
+  throw new ExceptionError("XXX", null);
+}
 
 const { DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_DATABASE } = process.env;
 export const AppDataSource = new DataSource({

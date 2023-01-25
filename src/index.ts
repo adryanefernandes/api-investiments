@@ -18,6 +18,7 @@ const main = async () => {
 
     app.listen(SERVER_PORT, () => console.log("Servidor de pé"));
   } catch (error) {
+    //TODO - mudar
     console.log(error);
   }
 };
