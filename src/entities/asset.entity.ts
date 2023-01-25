@@ -6,7 +6,7 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { AssetTypes, Wallet } from ".";
+import { AssetTypes, HistoricAsset, Wallet } from ".";
 import { AssetCategory, AssetRisc } from "../utils/enums";
 import { Timestamp } from "./extendigs/timestamp";
 
@@ -47,6 +47,9 @@ export class Asset {
   @ManyToOne(() => AssetTypes, (assetType) => assetType.assets)
   @JoinColumn({ name: "id_asset_type" })
   assetType: AssetTypes;
+
+  @OneToMany(() => HistoricAsset, (historicAsset) => historicAsset.investments)
+  historicAsset: HistoricAsset[];
 
   @Column(() => Timestamp, { prefix: false })
   times: Timestamp;

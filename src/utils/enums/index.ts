@@ -26,3 +26,15 @@ export enum AssetRisc {
   MODERATE = "moderate",
   HIGH = "high",
 }
+
+// Movimento feito em um investimento ( venda ou compra )
+export enum InvestmentMovement {
+  BUY = "buy",
+  SELL = "sell",
+}
+
+// Movimento do investimento ( alta ou baixa )
+export enum VariationAsset {
+  DOWN = "down",
+  UP = "up",
+}

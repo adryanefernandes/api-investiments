@@ -34,7 +34,7 @@ export class Address {
   @Column()
   number: number;
 
-  @Column({ default: true })
+  @Column({ name: "is_current", default: true })
   isCurrent: boolean;
 
   @ManyToOne(() => User, (user) => user.addresses)
