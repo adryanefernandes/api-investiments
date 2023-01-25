@@ -11,9 +11,9 @@ import { Asset } from "./asset.entity";
 import { Timestamp } from "./extendigs/timestamp";
 import { Investment } from "./investment.entity";
 
-@Entity("Historic_asset")
-export class HistoricAsset {
-  @PrimaryGeneratedColumn({ name: "id_historic_asset" })
+@Entity("Asset_history")
+export class AssetHistoric {
+  @PrimaryGeneratedColumn({ name: "id_asset_historic" })
   id: number;
 
   @Column({ default: 0 })

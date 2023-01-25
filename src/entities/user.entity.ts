@@ -1,6 +1,6 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { UserStatus } from "../utils/enums";
-import { Address, BankAccount } from ".";
+import { Address, BankAccount, Extract } from ".";
 import { Timestamp } from "./extendigs/timestamp";
 import { Wallet } from "./wallet.entity";
 
@@ -48,6 +48,9 @@ export class User {
 
   @OneToMany(() => Wallet, (wallet) => wallet.user)
   wallets: Wallet[];
+
+  @OneToMany(() => Extract, (extract) => extract.user)
+  extracts: Extract[];
 
   @Column(() => Timestamp, { prefix: false })
   times: Timestamp;

@@ -7,7 +7,7 @@ import {
 } from "typeorm";
 import { InvestmentMovement } from "../utils/enums";
 import { Timestamp } from "./extendigs/timestamp";
-import { HistoricAsset } from "./historicAsset.entity";
+import { AssetHistoric } from "./assetHistoric.entity";
 
 @Entity("Investments")
 export class Investment {
@@ -30,9 +30,9 @@ export class Investment {
   })
   movement: InvestmentMovement;
 
-  @ManyToOne(() => HistoricAsset, (historicAsset) => historicAsset.investments)
-  @JoinColumn({ name: "id_historic_asset" })
-  historic: HistoricAsset;
+  @ManyToOne(() => AssetHistoric, (historicAsset) => historicAsset.investments)
+  @JoinColumn({ name: "id_asset_historic" })
+  historic: AssetHistoric;
 
   @Column(() => Timestamp, { prefix: false })
   times: Timestamp;

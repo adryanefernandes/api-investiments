@@ -3,11 +3,12 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { FrequencyProceeds } from "../utils/enums";
 import { Timestamp } from "./extendigs/timestamp";
-import { User, Asset } from ".";
+import { User, Asset, Extract } from ".";
 
 @Entity("Wallets")
 export class Wallet {
@@ -40,6 +41,9 @@ export class Wallet {
   @ManyToOne(() => Asset, (asset) => asset.wallets)
   @JoinColumn({ name: "id_asset" })
   asset: Asset;
+
+  @OneToMany(() => Extract, (extract) => extract.wallet)
+  extracts: Extract[];
 
   @Column(() => Timestamp, { prefix: false })
   times: Timestamp;

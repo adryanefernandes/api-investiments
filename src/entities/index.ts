@@ -7,4 +7,5 @@ export * from "./wallet.entity";
 export * from "./asset.entity";
 export * from "./assetTypes.entity";
 export * from "./investment.entity";
-export * from "./historicAsset.entity";
+export * from "./assetHistoric.entity";
+export * from "./extract.entity";
