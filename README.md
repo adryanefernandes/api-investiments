@@ -2,6 +2,54 @@
 
 ### 📌 Objetivo
 
-Fornecer as informações e ferramentas necessárias para o usuário poder ter controle sobre seus investimento.
+Fornecer as informações e ferramentas necessárias para o usuário poder ter controle sobre seus investimentos.
 
-A api vai armazenar informações de investimos do cliente para acompanhar suas mudanças no mercado financeiro e alertar o usuário.
+Projeto feito com o intuito de aprender mais sobre ORM com typeORM, testes com Jest, e a aprimorar meus conhecimentos em Nodejs, Express e MySql.
+
+<br/>
+
+### ⚙ Tecnologias
+
+- NodeJS
+- Typescript
+- Express
+- Jest
+- TypeORM
+- MySQL
+
+_mais informações no package.json_
+
+<br/>
+
+### 🛠 Instalação
+
+```bash
+# Clone esse repositório
+$ git clone <https://github.com/adryanefernandes/MyMusic-BackEnd>
+
+# Instale as dependências
+$ npm install
+# or
+$ npm install -g yarn
+
+# Execute a aplicação em modo desenvolvedor
+$ npm run dev
+# or
+$ yarn dev
+
+# Servidar rodará em: https://localhost:3000
+```
+
+<br/>
+
+### 🥳 Suporte
+
+Se esse projeto te ajudou de alguma forma, deixe uma ⭐️!
+
+<br/>
+
+---
+
+<blockquote>
+    Feito por Adryane Cristine Soares Fernandes 🪐
+</blockquote>
