@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import { handleErrorResponse } from "../../utils";
+import { cleanSignupRequestBody } from "../../utils/cleanRequests/cleanSignupRequest";
 import { IErrorResponse, ISignupRequest } from "../../utils/interfaces";
-import { cleanSignupBodyRequest } from "../../utils/validates/cleanBodyRequest";
-import { validateBodySignup } from "../../utils/validates/validateBodyRequest";
+import { validateBodySignup } from "../../utils/validates/validateRequestBody/signupValidateRequestBody";
 
 class Signup {
   handle(req: Request, res: Response) {
@@ -11,7 +11,7 @@ class Signup {
 
       validateBodySignup(body);
 
-      const handleBody: ISignupRequest = cleanSignupBodyRequest(body);
+      const handleBody: ISignupRequest = cleanSignupRequestBody(body);
 
       // TODO - Api para cadastro de endereço
       // TODO - VERIFICA SE EMAIL JÁ FOI CADASTRADO

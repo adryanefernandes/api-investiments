@@ -1,7 +1,7 @@
 import { onlyNumbers } from "..";
 import { ISignupRequest } from "../interfaces/request.interface";
 
-export const cleanSignupBodyRequest = (
+export const cleanSignupRequestBody = (
   body: ISignupRequest
 ): ISignupRequest => {
   const response: ISignupRequest = {

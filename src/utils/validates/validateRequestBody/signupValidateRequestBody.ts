@@ -1,12 +1,12 @@
-import { ValidationError } from "../../errors";
-import { ISignupRequest } from "../interfaces/request.interface";
+import { ValidationError } from "../../../errors";
+import { ISignupRequest } from "../../interfaces/request.interface";
 import {
   validateCellphone,
   validateDocument,
   validateEmail,
   validatePassword,
   validateTellphone,
-} from ".";
+} from "../index";
 
 export const validateBodySignup = (body: ISignupRequest): void => {
   if (!body.name || body.name?.length < 3)
@@ -27,7 +27,7 @@ export const validateBodySignup = (body: ISignupRequest): void => {
   if (!validateDocument(body.document))
     throw new ValidationError("Documento inválido.", "xxx");
 
-  if (!body.email) throw new ValidationError("Email é obrigatório.", "xxx");
+  if (!body.email) throw new ValidationError("E-mail é obrigatório.", "xxx");
 
   if (!validateEmail(body.email))
     throw new ValidationError("E-mail inválido.", "XXX");
