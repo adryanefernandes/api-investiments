@@ -7,12 +7,12 @@ describe("Conexão com banco de dados", () => {
     const { parsed: enviroments } = dotenv.config();
 
     const enviromentsExpects: string[] = [
-      "DB_SERVER",
-      "DB_USERNAME",
+      "DB_HOST",
+      "DB_USER",
       "DB_PASSWORD",
-      "DB_SCHEMA",
-      "PORT",
-      "PASSWORD_COST",
+      "DB_DATABASE",
+      "DB_PORT",
+      "SERVER_PORT",
     ];
 
     const keys: string[] = Object.keys(enviroments);
