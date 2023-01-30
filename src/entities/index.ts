@@ -9,3 +9,4 @@ export * from "./assetTypes.entity";
 export * from "./investment.entity";
 export * from "./assetHistoric.entity";
 export * from "./extract.entity";
+export * from "./password.entity";

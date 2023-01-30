@@ -8,11 +8,10 @@ class Signup {
     try {
       const body: ISignupRequest = req.body;
 
-      await signupBusiness.execute(body);
+      const token: string = await signupBusiness.execute(body);
 
-      res.send({ message: "Deu tudo certo" });
+      res.status(201).send({ token });
     } catch (error) {
-      console.log(error);
       const { statusCode, response }: IErrorResponse =
         handleErrorResponse(error);
 

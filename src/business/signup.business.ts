@@ -1,31 +1,65 @@
+import { Password, User } from "../entities";
+import { ValidationError } from "../errors";
+import { passwordRepository, userRepository } from "../repositories";
+import { HashManager, Authenticator } from "../services";
 import { onlyNumbers } from "../utils";
-import { ISignupRequest } from "../utils/interfaces";
+import { IAuthenticatorData, ISignupRequest } from "../utils/interfaces";
 import { validateBodySignup } from "../utils/validates/validateRequestBody/signupValidateRequestBody";
 
 class SignupBusiness {
-  constructor() {}
+  constructor(
+    private _hashManager: HashManager = new HashManager(),
+    private _authenticator: Authenticator = new Authenticator()
+  ) {}
 
-  async execute(request: ISignupRequest): Promise<void> {
+  async execute(request: ISignupRequest): Promise<string> {
     validateBodySignup(request);
 
-    // Limpa a requisição
-    const signup: ISignupRequest = {
+    // Criação de usuário
+    const user: Partial<User> = {
       name: request.name?.toUpperCase().trim(),
-      last_name: request.last_name?.toUpperCase().trim(),
-      email: request.email.trim(),
+      lastName: request.last_name?.toUpperCase().trim(),
       document: onlyNumbers(request.document),
+      email: request.email.trim(),
       cellphone: request.cellphone && onlyNumbers(request.cellphone),
       tellphone: request.tellphone && onlyNumbers(request.tellphone),
-      password: request.password.trim(),
-      confirm_password: request.confirm_password.trim(),
     };
 
-    // TODO - Api para cadastro de endereço
-    // TODO - VERIFICA SE EMAIL JÁ FOI CADASTRADO
-    // TODO - Verificar se documento já foi cadastrado
-    // TODO - Hashear a senha
+    const userWithSameEmail: User[] = await userRepository.findByEmail(
+      user.email
+    );
+    if (userWithSameEmail.length > 0) {
+      throw new ValidationError("E-mail já cadastrado.", "xxx");
+    }
 
-    return;
+    const userWithSameDocument: User[] = await userRepository.findByDocument(
+      user.document
+    );
+    if (userWithSameDocument.length > 0) {
+      throw new ValidationError("Documento já cadastrado.", "xxx");
+    }
+
+    const userSaved: User = await userRepository.save(user);
+
+    // Criação de senha
+    const hashPassword: string = this._hashManager.create(
+      request.password.trim()
+    );
+
+    const password: Partial<Password> = {
+      hash: hashPassword,
+      user: userSaved,
+    };
+    await passwordRepository.save(password);
+
+    // Geração de JWT
+    const payload: IAuthenticatorData = {
+      id: userSaved.id,
+      uuid: userSaved.uuid,
+    };
+    const jwt: string = this._authenticator.generateToken(payload);
+
+    return jwt;
   }
 }
 

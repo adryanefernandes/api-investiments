@@ -13,6 +13,9 @@ describe("Conexão com banco de dados", () => {
       "DB_DATABASE",
       "DB_PORT",
       "SERVER_PORT",
+      "BCRYPT_COST",
+      "JWT_EXPIRES_IN",
+      "JWT_KEY",
     ];
 
     const keys: string[] = Object.keys(enviroments);

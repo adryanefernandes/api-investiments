@@ -8,16 +8,15 @@ export interface ISignupRequest {
   confirm_password: string;
   cellphone?: string;
   tellphone?: string;
-  address?: IAddressRequest;
 }
 
 // Requisição para cadastro de endereço
-interface IAddressRequest {
+export interface IAddressRequest {
   zipcode: string;
-  state: string;
-  city: string;
-  neighborhood: string;
-  address: string;
   number: number;
+  state?: string;
+  city?: string;
+  neighborhood?: string;
+  address?: string;
   complement?: string;
 }
