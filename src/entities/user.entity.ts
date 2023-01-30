@@ -37,9 +37,6 @@ export class User {
   })
   status: string;
 
-  @Column({ default: true })
-  active: boolean;
-
   @OneToMany(() => Address, (address) => address.user)
   addresses: Address[];
 
