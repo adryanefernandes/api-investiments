@@ -2,11 +2,15 @@ import { FindOptionsWhere } from "typeorm";
 import { AppDataSource } from "../dataSource";
 import { Password } from "../entities";
 
-class PasswordRepository {
+export class PasswordRepository {
   protected readonly repository = AppDataSource.getRepository(Password);
 
   async save(entity: Partial<Password>): Promise<Password> {
     return await this.repository.save(entity);
+  }
+
+  async create(entity: Partial<Password>): Promise<Password> {
+    return await this.repository.create(entity);
   }
 
   async findByUserId(userId: number, userUUID: string): Promise<Password> {
@@ -18,4 +22,3 @@ class PasswordRepository {
     });
   }
 }
-export default new PasswordRepository();

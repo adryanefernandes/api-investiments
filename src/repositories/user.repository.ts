@@ -2,7 +2,7 @@ import { FindManyOptions, FindOptionsRelations } from "typeorm";
 import { AppDataSource } from "../dataSource";
 import { User } from "../entities";
 
-class UserRepository {
+export class UserRepository {
   protected readonly repository = AppDataSource.getRepository(User);
 
   async save(entity: Partial<User>): Promise<User> {
@@ -25,4 +25,3 @@ class UserRepository {
     });
   }
 }
-export default new UserRepository();

@@ -1,14 +1,15 @@
 import { User } from "../../entities";
 import { ValidationError } from "../../errors";
-import userRepository from "../../repositories/user.repository";
+import { UserRepository } from "../../repositories/user.repository";
 import { Authenticator, HashManager } from "../../services";
 import { IAuthenticatorData, ILoginRequest } from "../../utils/interfaces";
 import { validateBodyLogin } from "../../utils/validates/validateRequestBody/loginValidateRequestBody";
 
-class LoginBusiness {
+export class LoginBusiness {
   constructor(
     private _hashManager: HashManager = new HashManager(),
-    private _authenticator: Authenticator = new Authenticator()
+    private _authenticator: Authenticator = new Authenticator(),
+    private _userRepository: UserRepository = new UserRepository()
   ) {}
 
   async execute(body: ILoginRequest): Promise<string> {
@@ -17,7 +18,7 @@ class LoginBusiness {
     const { document, password }: ILoginRequest = body;
 
     // Valida senha
-    const user: User = await userRepository.findByDocument(document, {
+    const user: User = await this._userRepository.findByDocument(document, {
       passwords: true,
     });
 

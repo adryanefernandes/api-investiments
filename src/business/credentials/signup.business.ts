@@ -1,7 +1,7 @@
 import { Password, User } from "../../entities";
 import { ValidationError } from "../../errors";
-import passwordRepository from "../../repositories/password.repository";
-import userRepository from "../../repositories/user.repository";
+import { PasswordRepository } from "../../repositories/password.repository";
+import { UserRepository } from "../../repositories/user.repository";
 import { HashManager, Authenticator } from "../../services";
 import { onlyNumbers } from "../../utils";
 import { IAuthenticatorData, ISignupRequest } from "../../utils/interfaces";
@@ -10,7 +10,9 @@ import { validateBodySignup } from "../../utils/validates/validateRequestBody/si
 export class SignupBusiness {
   constructor(
     private _hashManager: HashManager = new HashManager(),
-    private _authenticator: Authenticator = new Authenticator()
+    private _authenticator: Authenticator = new Authenticator(),
+    private _userRepository: UserRepository = new UserRepository(),
+    private _passwordRepository: PasswordRepository = new PasswordRepository()
   ) {}
 
   async execute(request: ISignupRequest): Promise<string> {
@@ -26,21 +28,20 @@ export class SignupBusiness {
       tellphone: request.tellphone && onlyNumbers(request.tellphone),
     };
 
-    const userWithSameEmail: User = await userRepository.findByEmail(
+    const userWithSameEmail: User = await this._userRepository.findByEmail(
       user.email
     );
     if (userWithSameEmail && Object.keys(userWithSameEmail).length > 0) {
       throw new ValidationError("E-mail já cadastrado.", "xxx");
     }
 
-    const userWithSameDocument: User = await userRepository.findByDocument(
-      user.document
-    );
+    const userWithSameDocument: User =
+      await this._userRepository.findByDocument(user.document);
     if (userWithSameDocument && Object.keys(userWithSameDocument).length > 0) {
       throw new ValidationError("Documento já cadastrado.", "xxx");
     }
 
-    const userSaved: User = await userRepository.save(user);
+    const userSaved: User = await this._userRepository.save(user);
 
     // Criação de senha
     const hashPassword: string = this._hashManager.create(
@@ -51,7 +52,7 @@ export class SignupBusiness {
       hash: hashPassword,
       user: userSaved,
     };
-    await passwordRepository.save(password);
+    await this._passwordRepository.save(password);
 
     // Geração de JWT
     const payload: IAuthenticatorData = {
