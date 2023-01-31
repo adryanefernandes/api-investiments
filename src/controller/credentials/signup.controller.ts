@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import signupBusiness from "../../business/signup.business";
+import signupBusiness from "../../business/credentials/signup.business";
 import { handleErrorResponse } from "../../utils";
 import { IErrorResponse, ISignupRequest } from "../../utils/interfaces";
 

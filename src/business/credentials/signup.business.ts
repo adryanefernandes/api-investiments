@@ -1,12 +1,13 @@
-import { Password, User } from "../entities";
-import { ValidationError } from "../errors";
-import { passwordRepository, userRepository } from "../repositories";
-import { HashManager, Authenticator } from "../services";
-import { onlyNumbers } from "../utils";
-import { IAuthenticatorData, ISignupRequest } from "../utils/interfaces";
-import { validateBodySignup } from "../utils/validates/validateRequestBody/signupValidateRequestBody";
+import { Password, User } from "../../entities";
+import { ValidationError } from "../../errors";
+import passwordRepository from "../../repositories/password.repository";
+import userRepository from "../../repositories/user.repository";
+import { HashManager, Authenticator } from "../../services";
+import { onlyNumbers } from "../../utils";
+import { IAuthenticatorData, ISignupRequest } from "../../utils/interfaces";
+import { validateBodySignup } from "../../utils/validates/validateRequestBody/signupValidateRequestBody";
 
-class SignupBusiness {
+export class SignupBusiness {
   constructor(
     private _hashManager: HashManager = new HashManager(),
     private _authenticator: Authenticator = new Authenticator()
@@ -25,17 +26,17 @@ class SignupBusiness {
       tellphone: request.tellphone && onlyNumbers(request.tellphone),
     };
 
-    const userWithSameEmail: User[] = await userRepository.findByEmail(
+    const userWithSameEmail: User = await userRepository.findByEmail(
       user.email
     );
-    if (userWithSameEmail.length > 0) {
+    if (userWithSameEmail && Object.keys(userWithSameEmail).length > 0) {
       throw new ValidationError("E-mail já cadastrado.", "xxx");
     }
 
-    const userWithSameDocument: User[] = await userRepository.findByDocument(
+    const userWithSameDocument: User = await userRepository.findByDocument(
       user.document
     );
-    if (userWithSameDocument.length > 0) {
+    if (userWithSameDocument && Object.keys(userWithSameDocument).length > 0) {
       throw new ValidationError("Documento já cadastrado.", "xxx");
     }
 

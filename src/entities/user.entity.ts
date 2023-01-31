@@ -1,6 +1,13 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  OneToMany,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 import { UserStatus } from "../utils/enums";
-import { Address, BankAccount, Extract } from ".";
+import { Address, BankAccount, Extract, Password } from ".";
 import { Timestamp } from "./extendigs/timestamp";
 import { Wallet } from "./wallet.entity";
 
@@ -48,6 +55,10 @@ export class User {
 
   @OneToMany(() => Extract, (extract) => extract.user)
   extracts: Extract[];
+
+  @OneToOne(() => Password)
+  @JoinColumn({ name: "id_password" })
+  passwords: Password;
 
   @Column(() => Timestamp, { prefix: false })
   times: Timestamp;

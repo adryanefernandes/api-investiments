@@ -10,6 +10,12 @@ export interface ISignupRequest {
   tellphone?: string;
 }
 
+// Requisição de login
+export interface ILoginRequest {
+  document: string;
+  password: string;
+}
+
 // Requisição para cadastro de endereço
 export interface IAddressRequest {
   zipcode: string;
