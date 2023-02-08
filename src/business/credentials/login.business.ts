@@ -3,7 +3,8 @@ import { ValidationError } from "../../errors";
 import { UserRepository } from "../../database/repositories/user.repository";
 import { Authenticator, HashManager } from "../../services";
 import { IAuthenticatorData, ILoginRequest } from "../../utils/interfaces";
-import { validateBodyLogin } from "../../utils/validates/validateRequestBody/loginValidateRequestBody";
+import { validateDocument } from "../../utils/validate";
+import { UserStatus } from "../../utils/enums";
 
 export class LoginBusiness {
   constructor(
@@ -12,25 +13,25 @@ export class LoginBusiness {
     private _userRepository: UserRepository = new UserRepository()
   ) {}
 
-  async execute(body: ILoginRequest): Promise<string> {
-    validateBodyLogin(body);
-
-    const { document, password }: ILoginRequest = body;
+  async execute({ document, password }: ILoginRequest): Promise<string> {
+    this.validateBodyRequest(document, password);
 
     // Valida senha
     const user: User = await this._userRepository.findByDocument(document, {
       passwords: true,
     });
 
-    const {
-      passwords: { hash },
-    } = user;
-    const isAuthenticator: boolean = this._hashManager.compareHash(
+    if (user.status.toLowerCase() !== UserStatus.ACTIVE) {
+      throw new ValidationError("Sua conta está inativa.", "xxx");
+    }
+
+    // Autentica a senha
+    const { hash } = user.passwords;
+    const isAuthenticated: boolean = this._hashManager.compareHash(
       password,
       hash
     );
-
-    if (!isAuthenticator) {
+    if (!isAuthenticated) {
       throw new ValidationError(
         "Senha incorreta, por favor tente novamente.",
         "xxx"
@@ -45,6 +46,20 @@ export class LoginBusiness {
     const jwt: string = this._authenticator.generateToken(payload);
 
     return jwt;
+  }
+
+  private validateBodyRequest(document: string, password: string) {
+    if (!document) {
+      throw new ValidationError("Documento é obrigatório para o login.", "xxx");
+    }
+
+    if (!validateDocument(document)) {
+      throw new ValidationError("Documento está inválido.", "XXX");
+    }
+
+    if (!password) {
+      throw new ValidationError("Senha é obrigatória para o login.", "xxx");
+    }
   }
 }
 

@@ -4,7 +4,7 @@ import {
   validateEmail,
   validatePassword,
   validateTellphone,
-} from ".";
+} from "../../src/utils/validate";
 
 describe("funções de validação", () => {
   test("validador de email", () => {
