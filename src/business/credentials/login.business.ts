@@ -1,6 +1,6 @@
-import { User } from "../../entities";
+import { User } from "../../database/entities";
 import { ValidationError } from "../../errors";
-import { UserRepository } from "../../repositories/user.repository";
+import { UserRepository } from "../../database/repositories/user.repository";
 import { Authenticator, HashManager } from "../../services";
 import { IAuthenticatorData, ILoginRequest } from "../../utils/interfaces";
 import { validateBodyLogin } from "../../utils/validates/validateRequestBody/loginValidateRequestBody";

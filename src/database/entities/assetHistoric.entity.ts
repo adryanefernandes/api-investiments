@@ -6,7 +6,7 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { VariationAsset } from "../utils/enums";
+import { VariationAsset } from "../../utils/enums";
 import { Asset } from "./asset.entity";
 import { Timestamp } from "./extendigs/timestamp";
 import { Investment } from "./investment.entity";

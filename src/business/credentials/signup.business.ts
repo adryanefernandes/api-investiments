@@ -1,7 +1,7 @@
-import { Password, User } from "../../entities";
+import { Password, User } from "../../database/entities";
 import { ValidationError } from "../../errors";
-import { PasswordRepository } from "../../repositories/password.repository";
-import { UserRepository } from "../../repositories/user.repository";
+import { PasswordRepository } from "../../database/repositories/password.repository";
+import { UserRepository } from "../../database/repositories/user.repository";
 import { HashManager, Authenticator } from "../../services";
 import { onlyNumbers } from "../../utils";
 import { IAuthenticatorData, ISignupRequest } from "../../utils/interfaces";

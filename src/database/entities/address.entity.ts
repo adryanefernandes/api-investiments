@@ -5,7 +5,7 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { User } from ".";
+import { User } from "../entities";
 import { Timestamp } from "./extendigs/timestamp";
 
 @Entity("Addresses")

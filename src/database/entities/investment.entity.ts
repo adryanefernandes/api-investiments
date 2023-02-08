@@ -5,7 +5,7 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { InvestmentMovement } from "../utils/enums";
+import { InvestmentMovement } from "../../utils/enums";
 import { Timestamp } from "./extendigs/timestamp";
 import { AssetHistoric } from "./assetHistoric.entity";
 

@@ -6,7 +6,7 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { FrequencyProceeds } from "../utils/enums";
+import { FrequencyProceeds } from "../../utils/enums";
 import { Timestamp } from "./extendigs/timestamp";
 import { User, Asset, Extract } from ".";
 

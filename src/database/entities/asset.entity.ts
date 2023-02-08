@@ -7,7 +7,7 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { AssetTypes, AssetHistoric, Wallet } from ".";
-import { AssetCategory, AssetRisc } from "../utils/enums";
+import { AssetCategory, AssetRisc } from "../../utils/enums";
 import { Timestamp } from "./extendigs/timestamp";
 
 @Entity("Assets")

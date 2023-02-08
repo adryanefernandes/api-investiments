@@ -1,6 +1,6 @@
 import { FindOptionsWhere } from "typeorm";
-import { AppDataSource } from "../dataSource";
-import { Password } from "../entities";
+import { AppDataSource } from "../../dataSource";
+import { Password } from "../../database/entities";
 
 export class PasswordRepository {
   protected readonly repository = AppDataSource.getRepository(Password);

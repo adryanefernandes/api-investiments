@@ -6,7 +6,7 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { UserStatus } from "../utils/enums";
+import { UserStatus } from "../../utils/enums";
 import { Address, BankAccount, Extract, Password } from ".";
 import { Timestamp } from "./extendigs/timestamp";
 import { Wallet } from "./wallet.entity";
