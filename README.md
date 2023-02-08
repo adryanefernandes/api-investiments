@@ -1,5 +1,24 @@
 # Api de investimentos ( em construção ) 🚧
 
+### ⚙ Todo's
+
+#### Credenciais
+
+- [x] Login
+- [x] Cadastro
+- [ ] Recuperar senha
+- [ ] Editar senha
+- [ ] Editar suas informações
+
+#### Usuário
+
+- [ ] Editar suas informações
+
+#### Conta bancária
+
+- [ ] Criar conta bancária
+- [ ] Apagar conta bancária
+
 ### 📌 Objetivo
 
 Fornecer as informações e ferramentas necessárias para o usuário poder ter controle sobre seus investimentos.
