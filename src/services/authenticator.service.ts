@@ -1,4 +1,5 @@
 import * as jwt from "jsonwebtoken";
+import { UnauthorizedError } from "../errors";
 import { IAuthenticatorData } from "../utils/interfaces";
 
 export class Authenticator {
@@ -21,9 +22,12 @@ export class Authenticator {
    * @returns
    */
   getTokenData(token: string): IAuthenticatorData {
-    const result: any = jwt.verify(token, process.env.JWT_KEY as string);
-
-    return result;
+    try {
+      const result: any = jwt.verify(token, process.env.JWT_KEY as string);
+      return result;
+    } catch (error) {
+      throw new UnauthorizedError("XXX");
+    }
   }
 }
 
