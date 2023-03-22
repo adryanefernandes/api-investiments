@@ -1,7 +1,6 @@
 import { onlyNumbers } from "./../../utils/index";
 import { Request, Response } from "express";
 import signupBusiness from "../../business/credentials/signup.business";
-import { User } from "../../database/entities";
 import { handleErrorResponse } from "../../utils";
 import { IErrorResponse, ISignupRequest } from "../../utils/interfaces";
 

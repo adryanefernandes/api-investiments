@@ -1,11 +1,19 @@
+import { Post, Route } from "tsoa";
+import { Example, OperationId, Response, Tags, Body } from "@tsoa/runtime";
+import { ValidationError, ExceptionError } from "./../../errors";
+import { credentialsResponseExample } from "./../../swagger/examples";
 import { User } from "../../database/entities";
-import { ValidationError } from "../../errors";
 import { UserRepository } from "../../database/repositories/user.repository";
 import { Authenticator, HashManager } from "../../services";
-import { IAuthenticatorData, ILoginRequest } from "../../utils/interfaces";
+import {
+  CredentialsResponse,
+  IAuthenticatorData,
+  ILoginRequest,
+} from "../../utils/interfaces";
 import { validateDocument } from "../../utils/validate";
 import { UserStatus } from "../../utils/enums";
 
+@Route("credential")
 export class LoginBusiness {
   constructor(
     private _hashManager: HashManager = new HashManager(),
@@ -13,7 +21,22 @@ export class LoginBusiness {
     private _userRepository: UserRepository = new UserRepository()
   ) {}
 
-  async execute({ document, password }: ILoginRequest): Promise<string> {
+  // Decoradores para a documentação
+  @Post("login")
+  @Tags("Credenciais")
+  @OperationId("credentialLogin")
+  @Example<CredentialsResponse>(credentialsResponseExample)
+  @Response<ValidationError>(400, "Bad request")
+  @Response<ExceptionError>(500, "Internal Server Error")
+
+  /**
+   * Ao fornecer os dados de acesso, retorna token de acesso do usuário.
+   * @param email - Email cadastrado previamente
+   * @param password - Senha previamente cadastrada
+   */
+  async execute(
+    @Body() { document, password }: ILoginRequest
+  ): Promise<string> {
     this.validateBodyRequest(document, password);
 
     const user: User = await this._userRepository.findByDocument(document, {

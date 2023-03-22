@@ -1,5 +1,5 @@
 // Resposta ao buscar endereço por cep
-export interface IZipCodeResponse {
+export type IZipCodeResponse = {
   cep: string;
   logradouro: string;
   complemento: string;
@@ -10,4 +10,10 @@ export interface IZipCodeResponse {
   gia: string;
   ddd: string;
   siafi: string;
-}
+};
+
+// POST /credential/signup e login
+export type CredentialsResponse = {
+  access_token: string;
+  token_type: string;
+};

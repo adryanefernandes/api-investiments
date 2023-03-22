@@ -2,6 +2,8 @@ import "reflect-metadata";
 import { AppDataSource } from "./dataSource";
 import express, { Express } from "express";
 import router from "./routes";
+import swaggerUi from "swagger-ui-express";
+import { readFileSync } from "fs";
 
 const SERVER_PORT = process.env.SERVER_PORT || 3000;
 
@@ -16,7 +18,15 @@ const main = async () => {
 
     app.use("/api", router);
 
-    app.listen(SERVER_PORT, () => console.log("Servidor de pé"));
+    // Api para a documentação
+    const swaggerDocument = JSON.parse(
+      readFileSync("./public/swagger.json", "utf-8")
+    );
+    app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+    app.listen(SERVER_PORT, () =>
+      console.log("Servidor de pé em: http://localhost:3000/")
+    );
   } catch (error) {
     //TODO - mudar
     console.log(error);

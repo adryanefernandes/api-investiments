@@ -5,7 +5,7 @@ import { ExceptionError } from "./errors";
 
 const { parsed } = dotenv.config();
 if (!isEnvConfigure(parsed)) {
-  throw new ExceptionError("XXX", null);
+  throw new ExceptionError("XXX");
 }
 
 const { DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_DATABASE } = process.env;

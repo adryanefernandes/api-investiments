@@ -1,0 +1,316 @@
+{
+	"components": {
+		"examples": {},
+		"headers": {},
+		"parameters": {},
+		"requestBodies": {},
+		"responses": {},
+		"schemas": {
+			"ValidationError": {
+				"description": "Classe customizada para erros 400 ( Bad Request )\r\n\r\nSeu construtor possui:\r\n     message: Mensagem mostrado no erro\r\n     trace: Código de erro para restreio ao debuggar\r\n     stack: Caminho do erro ( opcional )",
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"message": {
+						"type": "string"
+					},
+					"stack": {},
+					"statusCode": {
+						"type": "number",
+						"format": "double",
+						"default": 400
+					},
+					"trace": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"name",
+					"message",
+					"trace"
+				],
+				"type": "object",
+				"additionalProperties": false,
+				"example": {
+					"message": "Campo é obrigatório.",
+					"trace": "ERR999",
+					"stack": null
+				}
+			},
+			"ExceptionError": {
+				"description": "Classe customizada para erros 500 ( Exceptions )\r\nSua mensagem é sempre a mesma\r\n\r\nSeu construtor possui:\r\n     trace: Código de erro para restreio ao debuggar\r\n     stack: Caminho do erro",
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"message": {
+						"type": "string"
+					},
+					"stack": {
+						"type": "string"
+					},
+					"statusCode": {
+						"type": "number",
+						"format": "double",
+						"default": 500
+					},
+					"trace": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"name",
+					"message",
+					"trace"
+				],
+				"type": "object",
+				"additionalProperties": false,
+				"example": {
+					"message": "Erro inesperado, por favor entre em contato com o suporte.",
+					"trace": "ERR999",
+					"stack": null
+				}
+			},
+			"ILoginRequest": {
+				"properties": {
+					"password": {
+						"type": "string"
+					},
+					"document": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"password",
+					"document"
+				],
+				"type": "object",
+				"example": {
+					"email": "john_doe@email.com",
+					"password": "Alterar@123"
+				}
+			},
+			"NotFoundError": {
+				"description": "Classe customizada para erros 404 ( Not Found )\r\n *\r\nSeu construtor possui:\r\n     message: Mensagem mostrado no erro\r\n     trace: Código de erro para restreio ao debuggar\r\n     stack: Caminho do erro ( opcional )",
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"message": {
+						"type": "string"
+					},
+					"stack": {},
+					"statusCode": {
+						"type": "number",
+						"format": "double",
+						"default": 404
+					},
+					"trace": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"name",
+					"message",
+					"trace"
+				],
+				"type": "object",
+				"additionalProperties": false,
+				"example": {
+					"message": "Item não encontrado.",
+					"trace": "ERR999",
+					"stack": null
+				}
+			},
+			"ISignupRequest": {
+				"properties": {
+					"tellphone": {
+						"type": "string"
+					},
+					"cellphone": {
+						"type": "string"
+					},
+					"confirm_password": {
+						"type": "string"
+					},
+					"password": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string"
+					},
+					"document": {
+						"type": "string"
+					},
+					"last_name": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"confirm_password",
+					"password",
+					"email",
+					"document",
+					"last_name",
+					"name"
+				],
+				"type": "object"
+			}
+		},
+		"securitySchemes": {}
+	},
+	"info": {
+		"title": "api-investiments",
+		"version": "1.0.0",
+		"description": "Api para integração com o banco de dados de investimentos",
+		"license": {
+			"name": "ISC"
+		},
+		"contact": {
+			"name": "Adryane Fernandes ",
+			"email": "edryfernandes@gmail.com"
+		}
+	},
+	"openapi": "3.0.0",
+	"paths": {
+		"/credential/login": {
+			"post": {
+				"operationId": "credentialLogin",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "string"
+								},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoyMiwidXVpZCI6IjgwRDVBNzFELUM5QUItRUQxMS1CREM5LTIyOTlENkQyMzM1QyJ9LCJvZmZpY2UiOnsiaWQiOjMsInRpdGxlIjoiREVWRUxPUEVSIn0sImlhdCI6MTY3NjU1MzUxOCwiZXhwIjoxNjc2NjM5OTE4fQ.bzgX3IVxmnz-E0z9wNGacJPZC4bYBuIDRdY9u97P6ZI",
+											"token_type": "Bearer"
+										}
+									}
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ValidationError"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ExceptionError"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Credenciais"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ILoginRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/credential/signup": {
+			"post": {
+				"operationId": "credentialSignup",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "string"
+								},
+								"examples": {
+									"Example 1": {
+										"value": {
+											"access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoyMiwidXVpZCI6IjgwRDVBNzFELUM5QUItRUQxMS1CREM5LTIyOTlENkQyMzM1QyJ9LCJvZmZpY2UiOnsiaWQiOjMsInRpdGxlIjoiREVWRUxPUEVSIn0sImlhdCI6MTY3NjU1MzUxOCwiZXhwIjoxNjc2NjM5OTE4fQ.bzgX3IVxmnz-E0z9wNGacJPZC4bYBuIDRdY9u97P6ZI",
+											"token_type": "Bearer"
+										}
+									}
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ValidationError"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Not Found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/NotFoundError"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ExceptionError"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Credenciais"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ISignupRequest"
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+	"servers": [
+		{
+			"url": "/"
+		}
+	]
+}

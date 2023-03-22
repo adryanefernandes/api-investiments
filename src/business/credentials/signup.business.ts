@@ -1,9 +1,19 @@
+import {
+  Example,
+  OperationId,
+  Tags,
+  Response,
+  Post,
+  Route,
+  Body,
+} from "@tsoa/runtime";
+import { credentialsResponseExample } from "./../../swagger/examples";
+import { CredentialsResponse } from "./../../utils/interfaces/response.interface";
 import { Password, User } from "../../database/entities";
-import { ValidationError } from "../../errors";
+import { NotFoundError, ExceptionError, ValidationError } from "../../errors";
 import { PasswordRepository } from "../../database/repositories/password.repository";
 import { UserRepository } from "../../database/repositories/user.repository";
 import { HashManager, Authenticator } from "../../services";
-import { onlyNumbers } from "../../utils";
 import { IAuthenticatorData, ISignupRequest } from "../../utils/interfaces";
 import {
   validateCellphone,
@@ -13,6 +23,7 @@ import {
   validateTellphone,
 } from "../../utils/validate";
 
+@Route("credential")
 export class SignupBusiness {
   constructor(
     private _hashManager: HashManager = new HashManager(),
@@ -21,7 +32,19 @@ export class SignupBusiness {
     private _passwordRepository: PasswordRepository = new PasswordRepository()
   ) {}
 
-  async execute(body: ISignupRequest): Promise<string> {
+  // Decoradores para a documentação
+  @Post("signup")
+  @Tags("Credenciais")
+  @OperationId("credentialSignup")
+  @Example<CredentialsResponse>(credentialsResponseExample)
+  @Response<ValidationError>(400, "Bad request")
+  @Response<NotFoundError>(404, "Not Found")
+  @Response<ExceptionError>(500, "Internal Server Error")
+
+  /**
+   * Cadastra usuário no sistema.
+   */
+  async execute(@Body() body: ISignupRequest): Promise<string> {
     this.validateBodyRequest(body);
 
     const { name, last_name, document, email, cellphone, tellphone, password } =
