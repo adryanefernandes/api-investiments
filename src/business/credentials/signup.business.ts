@@ -24,30 +24,32 @@ export class SignupBusiness {
   async execute(body: ISignupRequest): Promise<string> {
     this.validateBodyRequest(body);
 
-    const user: Partial<User> = {
-      name: body.name?.toUpperCase().trim(),
-      lastName: body.last_name?.toUpperCase().trim(),
-      document: onlyNumbers(body.document),
-      email: body.email.trim(),
-      cellphone: body.cellphone && onlyNumbers(body.cellphone),
-      tellphone: body.tellphone && onlyNumbers(body.tellphone),
-    };
+    const { name, last_name, document, email, cellphone, tellphone, password } =
+      body;
 
     const userWithSameEmail: User = await this._userRepository.findByEmail(
-      user.email
+      email
     );
     if (userWithSameEmail !== null) {
       throw new ValidationError("E-mail já cadastrado.", "xxx");
     }
 
     const userWithSameDocument: User =
-      await this._userRepository.findByDocument(user.document);
+      await this._userRepository.findByDocument(document);
     if (userWithSameDocument !== null) {
       throw new ValidationError("Documento já cadastrado.", "xxx");
     }
 
+    const user: Partial<User> = {
+      name,
+      lastName: last_name,
+      document,
+      email,
+      cellphone,
+      tellphone,
+    };
     const userSaved: User = await this._userRepository.save(user);
-    await this.createPassword(body.password, userSaved);
+    await this.createPassword(password, userSaved);
 
     // Geração de JWT
     const payload: IAuthenticatorData = {

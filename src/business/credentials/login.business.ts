@@ -16,10 +16,15 @@ export class LoginBusiness {
   async execute({ document, password }: ILoginRequest): Promise<string> {
     this.validateBodyRequest(document, password);
 
-    // Valida senha
     const user: User = await this._userRepository.findByDocument(document, {
       passwords: true,
     });
+    if (!user) {
+      throw new ValidationError(
+        "Senha ou documento incorretos, por favor tente novamente.",
+        "xxx"
+      );
+    }
 
     if (user.status.toLowerCase() !== UserStatus.ACTIVE) {
       throw new ValidationError("Sua conta está inativa.", "xxx");
@@ -33,7 +38,7 @@ export class LoginBusiness {
     );
     if (!isAuthenticated) {
       throw new ValidationError(
-        "Senha incorreta, por favor tente novamente.",
+        "Senha ou documento incorretos, por favor tente novamente.",
         "xxx"
       );
     }
